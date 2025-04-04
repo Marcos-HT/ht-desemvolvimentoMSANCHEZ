@@ -78,7 +78,8 @@ body {
     gap: 1rem;
     align-items: center;
     width: 100%;
-    flex-wrap: wrap; /* Adicionado para quebrar em telas menores */
+    flex-wrap: wrap;
+    /* Adicionado para quebrar em telas menores */
 }
 
 .cabecalho__menu__link {
@@ -265,7 +266,8 @@ body {
     }
 
     .cabecalho__menu {
-        justify-content: center; /* Centraliza o menu */
+        justify-content: center;
+        /* Centraliza o menu */
         gap: 0.8rem;
     }
 
@@ -295,8 +297,10 @@ body {
     }
 
     .apresentacao__imagem-container {
-        display: block; /* Mostra a imagem */
-        max-width: 70%; /* Limita a largura da imagem */
+        display: block;
+        /* Mostra a imagem */
+        max-width: 70%;
+        /* Limita a largura da imagem */
     }
 
     .controle-dispositivos {
@@ -304,8 +308,10 @@ body {
     }
 
     .controle-dispositivos__conteudo {
-        width: 80%; /* Aumenta a largura do conteúdo */
-        margin: 0 auto; /* Centraliza o conteúdo */
+        width: 80%;
+        /* Aumenta a largura do conteúdo */
+        margin: 0 auto;
+        /* Centraliza o conteúdo */
     }
 
     .controle-dispositivos__select,
@@ -331,7 +337,8 @@ body {
     }
 
     .cabecalho {
-        justify-content: center; /* Centraliza o cabeçalho */
+        justify-content: center;
+        /* Centraliza o cabeçalho */
     }
 
     .cabecalho__menu {
@@ -366,7 +373,8 @@ body {
     }
 
     .apresentacao__imagem-container {
-        display: none; /* Oculta a imagem em celulares */
+        display: none;
+        /* Oculta a imagem em celulares */
     }
 
     .controle-dispositivos {
@@ -394,34 +402,49 @@ body {
         width: 100%;
         height: auto;
         position: static;
-        overflow-x: auto; /* Adicionado para rolagem horizontal se necessário */
-        white-space: nowrap; /* Impede quebra de linha */
+        overflow-x: auto;
+        /* Adicionado para rolagem horizontal se necessário */
+        white-space: nowrap;
+        /* Impede quebra de linha */
         box-shadow: none;
         padding: 10px;
         display: flex;
         align-items: center;
+        flex-direction: column;
+        /* Alterado para exibir verticalmente */
     }
 
     .menu-lateral h2 {
-        display: none; /* Oculta o título "Menu" */
+        display: none;
+        /* Oculta o título "Menu" */
     }
 
     .menu-lateral__link {
-        display: inline-block;
-        margin: 0 5px;
+        display: block;
+        /* Alterado para block */
+        margin: 5px 0;
+        /* Adicionado espaçamento vertical */
         padding: 8px 12px;
+        font-size: 0.9rem;
+        /* Adicionado tamanho da fonte */
+        width: 150px;
+        /* Adicionado largura fixa */
+        text-align: center;
+        /* Centralizar texto */
     }
 
     .conteudo-principal {
         margin-left: 0;
         width: 100%;
         padding: 10px;
-        min-height: auto; /* Remove a altura mínima */
+        min-height: auto;
+        /* Remove a altura mínima */
     }
 
     .conteudo-alinhado {
         width: 100%;
-        margin: 0; /* Remove a margem */
+        margin: 0;
+        /* Remove a margem */
     }
 }
 
