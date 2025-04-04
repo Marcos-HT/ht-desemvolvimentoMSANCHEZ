@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Dispositivos</title>
+    <link rel="stylesheet" href="device_control.css">
+</head>
+
+<body>
+    <div class="cabecalho-container">
+        <header class="cabecalho">
+            <nav class="cabecalho__menu">
+                <a class="cabecalho__menu__link" href="index.html">Home</a>
+                <a class="cabecalho__menu__link" href="about.html">Sobre mim</a>
+                <a class="cabecalho__menu__link" href="https://hoteltechbr.com/">Site</a>
+                <a class="cabecalho__menu__link"
+                    href="https://linktr.ee/hoteltechbr?fbclid=PAZXh0bgNhZW0CMTEAAabkMO4la17UClW7pn4mzYZtlOWm8mhEpbLtwtwWbhaktQWr2EcwExv3izE_aem_mB0EeGs9i2_DvoS1mdtOKw">Whatsapp</a>
+            </nav>
+        </header>
+    </div>
+
+    <main class="principal">
+        <section class="apresentacao">
+            <div class="apresentacao__conteudo">
+                <h1 class="apresentacao__conteudo__titulo">Bem-vindo <strong class="titulo-destaque">Hoteltech</strong></h1>
+                <p class="apresentacao__conteudo__texto">Transforme a experiência dos seus hóspedes com soluções tecnológicas inovadoras.</p>
+                <p class="apresentacao__conteudo__texto">
+                    Imagine um hotel onde a tecnologia trabalha a seu favor, proporcionando
+                    uma experiência sem igual aos seus hóspedes. Ao escolher a Hotel Tech,
+                    você se beneficia de um atendimento de excelência, soluções inovadoras e
+                    suporte técnico que realmente faz a diferença.
+                </p>
+            </div>
+            <div class="apresentacao__imagem-container">
+                <img src="./assets/imagem3.png" alt="Dispositivos de controle" class="apresentacao__imagem">
+            </div>
+        </section>
+
+        <section class="controle-dispositivos">
+            <div class="controle-dispositivos__conteudo">
+                <h1 class="controle-dispositivos__titulo">Controle de Dispositivos</h1>
+
+                <label for="deviceSelect">Selecione um Dispositivo:</label>
+                <select id="deviceSelect" class="controle-dispositivos__select" onchange="mostrarControles()">
+                    <option value="">Nenhum dispositivo cadastrado</option>
+                </select>
+
+                <div class="controle-dispositivos__status" id="status">Status: <span class="desligado">DESLIGADO</span></div>
+
+                <h2 class="controle-dispositivos__subtitulo">Adicionar Novo Dispositivo</h2>
+                <input type="text" id="nomeDispositivo" class="controle-dispositivos__input" placeholder="Nome do Dispositivo">
+                <input type="text" id="ipDispositivo" class="controle-dispositivos__input" placeholder="Endereço IP">
+                <button onclick="adicionarDispositivo()" class="controle-dispositivos__botao">Adicionar</button>
+
+                <div id="controls">
+                    <button onclick="controlarDispositivo('turn_on')" class="controle-dispositivos__botao control-btn">Ligar</button>
+                    <button onclick="controlarDispositivo('turn_off')" class="controle-dispositivos__botao control-btn">Desligar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>Desenvolvido por Marcos Sanchez / Hotel tech.</p>
+    </footer>
+
+    <script>
+        let dispositivos = {};
+
+        function atualizarLista() {
+            let select = document.getElementById("deviceSelect");
+            select.innerHTML = "<option value=''>Nenhum dispositivo cadastrado</option>";
+
+            for (let nome in dispositivos) {
+                let option = document.createElement("option");
+                option.value = dispositivos[nome];
+                option.textContent = nome;
+                select.appendChild(option);
+            }
+        }
+
+        function controlarDispositivo(acao) {
+            let select = document.getElementById("deviceSelect");
+            let ip = select.value;
+
+            if (!ip) {
+                alert("Selecione um dispositivo!");
+                return;
+            }
+
+            let url = `http://${ip}:81/${acao}`;
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(`Resposta de ${ip}:`, data);
+                    verificarStatus(ip); // Atualiza status real do relé
+                })
+                .catch(error => {
+                    console.error('Erro ao conectar:', error);
+                    document.getElementById("status").innerHTML = "Status: <span class='desligado'>DESLIGADO</span>";
+                    alert("Erro ao conectar ao dispositivo!");
+                });
+        }
+
+        function verificarStatus(ip) {
+            fetch(`http://${ip}:81/status?nocache=${Math.random()}`) // Evita cache
+                .then(response => response.text())
+                .then(data => {
+                    console.log(`Status de ${ip}:`, data);
+                    let statusElement = document.getElementById("status");
+                    if (data.trim() === "LIGADO") {
+                        statusElement.innerHTML = "Status: <span class='ligado'>LIGADO</span>";
+                    } else {
+                        statusElement.innerHTML = "Status: <span class='desligado'>DESLIGADO</span>";
+                    }
+                })
+                .catch(() => {
+                    document.getElementById("status").innerHTML = "Status: <span class='desligado'>DESLIGADO</span>";
+                });
+        }
+
+        function adicionarDispositivo() {
+            let nome = document.getElementById("nomeDispositivo").value.trim();
+            let ip = document.getElementById("ipDispositivo").value.trim();
+
+            if (!nome || !ip) {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+            if (dispositivos[nome]) {
+                alert("Este nome já está cadastrado!");
+                return;
+            }
+
+            dispositivos[nome] = ip;
+            atualizarLista();
+            alert(`Dispositivo "${nome}" adicionado com sucesso!`);
+
+            document.getElementById("nomeDispositivo").value = "";
+            document.getElementById("ipDispositivo").value = "";
+        }
+
+        function mostrarControles() {
+            let select = document.getElementById("deviceSelect");
+            let controls = document.getElementById("controls");
+
+            if (select.value) {
+                controls.style.display = "block";
+                verificarStatus(select.value); // Atualiza status ao selecionar
+            } else {
+                controls.style.display = "none";
+            }
+        }
+
+        window.onload = atualizarLista;
+    </script>
+</body>
+
+</html>
