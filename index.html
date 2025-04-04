@@ -1,71 +1,106 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Dispositivos</title>
     <link rel="stylesheet" href="device_control.css">
+    <style>
+        /* Estilos para mensagens de erro */
+        .mensagem-erro {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .mensagem-sucesso {
+            color: green;
+            margin-top: 10px;
+        }
+
+        .carregando {
+            opacity: 0.6;
+            /* Diminui a opacidade para indicar carregamento */
+            pointer-events: none;
+            /* Impede cliques durante o carregamento */
+        }
+    </style>
 </head>
 
 <body>
-    <div class="cabecalho-container">
-        <header class="cabecalho">
-            <nav class="cabecalho__menu">
-                <a class="cabecalho__menu__link" href="index.html">Home</a>
-                <a class="cabecalho__menu__link" href="about.html">Sobre mim</a>
-                <a class="cabecalho__menu__link" href="https://hoteltechbr.com/">Site</a>
-                <a class="cabecalho__menu__link"
-                    href="https://linktr.ee/hoteltechbr?fbclid=PAZXh0bgNhZW0CMTEAAabkMO4la17UClW7pn4mzYZtlOWm8mhEpbLtwtwWbhaktQWr2EcwExv3izE_aem_mB0EeGs9i2_DvoS1mdtOKw">Whatsapp</a>
-            </nav>
-        </header>
+    <div class="menu-lateral">
+        <h2>Menu</h2>
+        <a href="#" class="menu-lateral__link">Gerenciar Quartos</a>
+        <a href="#" class="menu-lateral__link">Gerenciar Dispositivos</a>
+        <a href="#" class="menu-lateral__link">Controle</a>
+        <a href="#" class="menu-lateral__link">Relatórios</a>
     </div>
 
-    <main class="principal">
-        <section class="apresentacao">
-            <div class="apresentacao__conteudo">
-                <h1 class="apresentacao__conteudo__titulo">Bem-vindo <strong class="titulo-destaque">Hoteltech</strong></h1>
-                <p class="apresentacao__conteudo__texto">Transforme a experiência dos seus hóspedes com soluções tecnológicas inovadoras.</p>
-                <p class="apresentacao__conteudo__texto">
-                    Imagine um hotel onde a tecnologia trabalha a seu favor, proporcionando
-                    uma experiência sem igual aos seus hóspedes. Ao escolher a Hotel Tech,
-                    você se beneficia de um atendimento de excelência, soluções inovadoras e
-                    suporte técnico que realmente faz a diferença.
-                </p>
-            </div>
-            <div class="apresentacao__imagem-container">
-                <img src="./assets/imagem3.png" alt="Dispositivos de controle" class="apresentacao__imagem">
-            </div>
-        </section>
+    <div class="conteudo-principal">
+        <div class="conteudo-alinhado">
+            <header class="cabecalho">
+                <nav class="cabecalho__menu">
+                    <a class="cabecalho__menu__link" href="index.html">Home</a>
+                    <a class="cabecalho__menu__link" href="about.html">Sobre mim</a>
+                    <a class="cabecalho__menu__link" href="https://hoteltechbr.com/">Site</a>
+                    <a class="cabecalho__menu__link"
+                        href="https://linktr.ee/hoteltechbr?fbclid=PAZXh0bgNhZW0CMTEAAabkMO4la17UClW7pn4mzYZtlOWm8mhEpbLtwtwWbhaktQWr2EcwExv3izE_aem_mB0EeGs9i2_DvoS1mdtOKw">Whatsapp</a>
+                </nav>
+            </header>
 
-        <section class="controle-dispositivos">
-            <div class="controle-dispositivos__conteudo">
-                <h1 class="controle-dispositivos__titulo">Controle de Dispositivos</h1>
+            <main class="principal">
+                <section class="apresentacao">
+                    <div class="apresentacao__conteudo">
+                        <h1 class="apresentacao__conteudo__titulo">Bem-vindo <strong class="titulo-destaque">Hoteltech</strong>
+                        </h1>
+                        <p class="apresentacao__conteudo__texto">Transforme a experiência dos seus hóspedes com soluções tecnológicas
+                            inovadoras.</p>
+                        <p class="apresentacao__conteudo__texto">
+                            Imagine um hotel onde a tecnologia trabalha a seu favor, proporcionando
+                            uma experiência sem igual aos seus hóspedes. Ao escolher a Hotel Tech,
+                            você se beneficia de um atendimento de excelência, soluções inovadoras e
+                            suporte técnico que realmente faz a diferença.
+                        </p>
+                    </div>
+                    <div class="apresentacao__imagem-container">
+                        <img src="./assets/imagem3.png" alt="Dispositivos de controle" class="apresentacao__imagem">
+                    </div>
+                </section>
 
-                <label for="deviceSelect">Selecione um Dispositivo:</label>
-                <select id="deviceSelect" class="controle-dispositivos__select" onchange="mostrarControles()">
-                    <option value="">Nenhum dispositivo cadastrado</option>
-                </select>
+                <section class="controle-dispositivos">
+                    <div class="controle-dispositivos__conteudo">
+                        <h1 class="controle-dispositivos__titulo">Controle de Dispositivos</h1>
 
-                <div class="controle-dispositivos__status" id="status">Status: <span class="desligado">DESLIGADO</span></div>
+                        <label for="deviceSelect" class="controle-dispositivos__label">Selecione um Dispositivo:</label>
+                        <select id="deviceSelect" class="controle-dispositivos__select" onchange="mostrarControles()">
+                            <option value="">Nenhum dispositivo cadastrado</option>
+                        </select>
 
-                <h2 class="controle-dispositivos__subtitulo">Adicionar Novo Dispositivo</h2>
-                <input type="text" id="nomeDispositivo" class="controle-dispositivos__input" placeholder="Nome do Dispositivo">
-                <input type="text" id="ipDispositivo" class="controle-dispositivos__input" placeholder="Endereço IP">
-                <button onclick="adicionarDispositivo()" class="controle-dispositivos__botao">Adicionar</button>
+                        <div class="controle-dispositivos__status" id="status">Status: <span
+                                class="desligado">DESLIGADO</span></div>
+                        <div id="mensagem" class="mensagem"></div>
 
-                <div id="controls">
-                    <button onclick="controlarDispositivo('turn_on')" class="controle-dispositivos__botao control-btn">Ligar</button>
-                    <button onclick="controlarDispositivo('turn_off')" class="controle-dispositivos__botao control-btn">Desligar</button>
-                </div>
-            </div>
-        </section>
-    </main>
+                        <h2 class="controle-dispositivos__subtitulo">Adicionar Novo Dispositivo</h2>
+                        <label for="nomeDispositivo" class="controle-dispositivos__label">Nome do Dispositivo:</label>
+                        <input type="text" id="nomeDispositivo" class="controle-dispositivos__input"
+                            placeholder="Nome do Dispositivo">
+                        <label for="ipDispositivo" class="controle-dispositivos__label">Endereço IP:</label>
+                        <input type="text" id="ipDispositivo" class="controle-dispositivos__input" placeholder="Endereço IP">
+                        <button onclick="adicionarDispositivo()" class="controle-dispositivos__botao">Adicionar</button>
 
-    <footer class="rodape">
-        <p>Desenvolvido por Marcos Sanchez / Hotel tech.</p>
-    </footer>
+                        <div id="controls">
+                            <button onclick="controlarDispositivo('turn_on')" class="acao-btn">Ligar</button>
+                            <button onclick="controlarDispositivo('turn_off')" class="acao-btn">Desligar</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
 
+        <footer class="rodape">
+            <p>Desenvolvido por Hotel tech.</p>
+        </footer>
+    </div>
     <script>
         let dispositivos = {};
 
@@ -81,31 +116,55 @@
             }
         }
 
+        function exibirMensagem(texto, tipo) {
+            let mensagemElement = document.getElementById("mensagem");
+            mensagemElement.textContent = texto;
+            mensagemElement.className = `mensagem ${tipo}`;
+            mensagemElement.style.display = "block";
+            setTimeout(() => {
+                mensagemElement.style.display = "none";
+            }, 3000); // Oculta a mensagem após 3 segundos
+        }
+
         function controlarDispositivo(acao) {
             let select = document.getElementById("deviceSelect");
             let ip = select.value;
+            let botaoLigar = document.querySelector("button[onclick=\"controlarDispositivo('turn_on')\"]");
+            let botaoDesligar = document.querySelector("button[onclick=\"controlarDispositivo('turn_off')\"]");
 
             if (!ip) {
-                alert("Selecione um dispositivo!");
+                exibirMensagem("Selecione um dispositivo!", "mensagem-erro");
                 return;
             }
 
             let url = `http://${ip}:81/${acao}`;
+
+            // Adiciona a classe de carregamento aos botões
+            botaoLigar.classList.add('carregando');
+            botaoDesligar.classList.add('carregando');
+
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     console.log(`Resposta de ${ip}:`, data);
-                    verificarStatus(ip); // Atualiza status real do relé
+                    verificarStatus(ip);
+                    exibirMensagem(`Dispositivo ${acao === 'turn_on' ? 'ligado' : 'desligado'} com sucesso!`,
+                        "mensagem-sucesso");
                 })
                 .catch(error => {
                     console.error('Erro ao conectar:', error);
                     document.getElementById("status").innerHTML = "Status: <span class='desligado'>DESLIGADO</span>";
-                    alert("Erro ao conectar ao dispositivo!");
+                    exibirMensagem("Erro ao conectar ao dispositivo!", "mensagem-erro");
+                })
+                .finally(() => {
+                    // Remove a classe de carregamento dos botões (sempre executa)
+                    botaoLigar.classList.remove('carregando');
+                    botaoDesligar.classList.remove('carregando');
                 });
         }
 
         function verificarStatus(ip) {
-            fetch(`http://${ip}:81/status?nocache=${Math.random()}`) // Evita cache
+            fetch(`http://${ip}:81/status?nocache=${Math.random()}`)
                 .then(response => response.text())
                 .then(data => {
                     console.log(`Status de ${ip}:`, data);
@@ -126,18 +185,18 @@
             let ip = document.getElementById("ipDispositivo").value.trim();
 
             if (!nome || !ip) {
-                alert("Preencha todos os campos!");
+                exibirMensagem("Preencha todos os campos!", "mensagem-erro");
                 return;
             }
 
             if (dispositivos[nome]) {
-                alert("Este nome já está cadastrado!");
+                exibirMensagem("Este nome já está cadastrado!", "mensagem-erro");
                 return;
             }
 
             dispositivos[nome] = ip;
             atualizarLista();
-            alert(`Dispositivo "${nome}" adicionado com sucesso!`);
+            exibirMensagem(`Dispositivo "${nome}" adicionado com sucesso!`, "mensagem-sucesso");
 
             document.getElementById("nomeDispositivo").value = "";
             document.getElementById("ipDispositivo").value = "";
@@ -149,7 +208,7 @@
 
             if (select.value) {
                 controls.style.display = "block";
-                verificarStatus(select.value); // Atualiza status ao selecionar
+                verificarStatus(select.value);
             } else {
                 controls.style.display = "none";
             }
